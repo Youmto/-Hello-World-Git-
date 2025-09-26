@@ -2,13 +2,16 @@
 import React from 'react';
 import { Search, ChevronDown, HelpCircle, Menu } from 'lucide-react';
 import { useNavigate } from "react-router-dom";
+import { linearGradient } from 'framer-motion/client';
 
 
 function Header() {
   const navigate = useNavigate();
+  const heroOverlay = "linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0))";
 
   return (
-    <header className="bg-background shadow-md">
+    <header className="bg-background shadow-md"   style={{
+    background:'linearGradient:"linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0)) 70%"',}}>
       {/* Première barre : Logo, Recherche, Actions */}
       <div className="navbar p-4">
         {/* Partie gauche : Nom de marque et menu mobile */}
@@ -45,6 +48,16 @@ function Header() {
               <li><a>Tous les articles</a></li>
               <li><a>Mode</a></li>
               <li><a>Maison</a></li>
+              <li><a>Femmes</a></li>
+              <li><a>Hommes</a></li>
+              <li><a>Articles de créateurs</a></li>
+              <li><a>Enfants</a></li>
+              <li><a>Maison</a></li>
+              <li><a>Électronique</a></li>
+              <li><a>Divertissement</a></li>
+              <li><a>Loisirs et collections</a></li>
+              <li><a>Sport</a></li>
+
             </ul>
           </div>
           {/* Barre de recherche proprement dite */}
@@ -81,7 +94,7 @@ function Header() {
       {/* Deuxième barre : Catégories principales */}
   <div className="hidden lg:flex justify-center bg-background border-t border-gray-200 py-2 text-sm text-text-dark">
         <div className="flex space-x-6 px-4">
-          {['Femmes', 'Hommes', 'Articles de créateurs', 'Enfants', 'Maison', 'Électronique', 'Divertissement', 'Loisirs et collections', 'Sport', 'À propos', 'Notre plateforme'].map((item, index) => (
+          {['À propos', 'Notre plateforme'].map((item, index) => (
             <a 
               key={index} 
               href="#" 

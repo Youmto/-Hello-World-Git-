@@ -1,7 +1,7 @@
 // src/components/HeroSection.jsx
 import React from 'react';
 // Vous pouvez utiliser une image depuis votre dossier assets ou un lien public
-import heroImage from '../assets/hero-image.png';
+import heroImage from '../assets/iphone.jpg';
 
 function HeroSection() {
   return (
