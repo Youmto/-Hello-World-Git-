@@ -1,20 +1,24 @@
 // src/App.jsx
 import React from 'react';
-import Header from './components/Header'; // Nous allons créer celui-ci
-import HeroSection from './components/HeroSection.jsx'; // Et celui-là
-import ProductGrid from './components/ProductGrid'; // Puis celui-ci
-import Footer from './components/Footer'; // Et enfin notre Footer
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Product from '../pages/product';
+import Login from '../pages/login';
+import Signup from '../pages/signup';
 
 function App() {
   return (
-    <div className="flex flex-col min-h-screen bg-background text-text-dark">
-      <Header />
-      <main className="flex-grow">
-        <HeroSection />
-        <ProductGrid />
-      </main>
-      <Footer />
-    </div>
+    <BrowserRouter>
+      <Routes>
+          {/* <Route index element={<HomePage />} /> */}
+          <Route index element={<Product />} />
+          <Route path="/product" element={<Product />} />
+          {/* <Route path="reset-password" element={<ResetPasswordPage />} />
+          <Route path="forgot-password" element={<ForgotPasswordPage />} /> */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          {/* <Route path='*' element={<PageNotFound/>} /> */}
+      </Routes>
+    </BrowserRouter>
   );
 }
 

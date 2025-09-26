@@ -1,8 +1,12 @@
 // src/components/Header.jsx
 import React from 'react';
 import { Search, ChevronDown, HelpCircle, Menu } from 'lucide-react';
+import { useNavigate } from "react-router-dom";
+
 
 function Header() {
+  const navigate = useNavigate();
+
   return (
     <header className="bg-background shadow-md">
       {/* Première barre : Logo, Recherche, Actions */}
@@ -20,7 +24,7 @@ function Header() {
               <li><a>Articles de créateurs</a></li>
               {/*... Ajoutez le reste des liens ...*/}
               <li className="divider"></li>
-              <li><a>S'inscrire | Se connecter</a></li>
+              <li><a href="/login">S'inscrire | Se connecter</a></li>
               <li><a>Vends tes articles</a></li>
             </ul>
           </div>
@@ -52,7 +56,7 @@ function Header() {
 
         {/* Partie droite : Boutons d'action, Aide, Langue */}
         <div className="navbar-end w-auto lg:w-2/5 flex items-center space-x-2 md:space-x-4 ml-4">
-          <button className="btn btn-ghost btn-sm hidden md:flex text-text-dark border border-gray-300 hover:bg-gray-200">
+          <button className="btn btn-ghost btn-sm hidden md:flex text-text-dark border border-gray-300 hover:bg-gray-200" onClick={() => navigate("/login")}>
             S'inscrire | Se connecter
           </button>
           <button className="btn bg-primary text-white btn-sm hover:bg-orange-600 border-none hidden md:flex">

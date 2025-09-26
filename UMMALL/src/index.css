@@ -6,3 +6,9 @@
 
  
   };
+
+@theme{
+  --color-underline: oklab(0.4 0.0966976 0.076017 / 0.8)
+
+}
+
