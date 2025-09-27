@@ -26,7 +26,7 @@ function HeroSection() {
           <button className="btn btn-lg bg-primary text-white hover:bg-orange-600 border-none transition-colors duration-300">
             Commencer à vendre
           </button>
-          <a href="#" className="link link-hover text-white text-lg font-semibold mt-4 sm:mt-0">
+          <a href="#" className=" text-white text-lg font-semibold mt-4 sm:mt-0">
             Découvrir comment ça marche
           </a>
         </div>

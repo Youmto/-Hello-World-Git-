@@ -1,99 +1,140 @@
 // src/components/Header.jsx
 import React from 'react';
-import { Search, ChevronDown, HelpCircle, Menu } from 'lucide-react';
-import { useNavigate } from "react-router-dom";
+import { Search, Menu, Heart, Gift, ShoppingBag } from 'lucide-react'; 
+
+// Liste des catégories pour le menu déroulant principal (style image bde539.png)
+const mainCategoriesList = [
+  'Accessoires', 'Animaux', 'Art et collections', 'Bain et beauté', 
+  'Bijoux', 'Bébé', 'Cadeaux', 'Chaussures', 'Électronique et accessoires', 
+  'Fournitures créatives et outils', 'Jeux et jouets', 'Livres, films et musique',
+  'Maison', 'Vêtements' // Ajout de quelques éléments pour compléter la liste
+];
+
+// Liste des catégories pour la barre secondaire (style image 88bd04.png)
+const secondaryCategories = [
+  { name: "Cadeaux", icon: Gift }, 
+  { name: "Favoris d'Halloween", icon: Heart }, 
+  { name: "Articles de déco", icon: null }, 
+  { name: "Articles de mode", icon: null }, 
+  { name: "Liste de cadeaux", icon: null },
+];
 
 
 function Header() {
-  const navigate = useNavigate();
-
   return (
     <header className="bg-background shadow-md">
-      {/* Première barre : Logo, Recherche, Actions */}
-      <div className="navbar p-4">
-        {/* Partie gauche : Nom de marque et menu mobile */}
-        <div className="navbar-start w-auto lg:w-1/5">
-          <div className="dropdown lg:hidden">
-            <label tabIndex={0} className="btn btn-ghost">
+      {/* 1. BARRE SUPÉRIEURE : Logo, Recherche, Actions */}
+      <div className="container mx-auto flex items-center justify-between p-3 sm:p-4">
+
+        {/* --- PARTIE GAUCHE : Logo et Bouton Catégories --- */}
+        <div className="flex items-center space-x-4"> 
+          
+          {/* Menu Burger Mobile (Hidden sur PC) */}
+          <div className="dropdown lg:hidden"> 
+            <label tabIndex={0} className="btn btn-ghost btn-circle">
               <Menu className="h-6 w-6 text-text-dark" />
             </label>
-            <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-white rounded-box w-52">
-              {/* Liens pour mobile */}
-              <li><a>Femmes</a></li>
-              <li><a>Hommes</a></li>
-              <li><a>Articles de créateurs</a></li>
-              {/*... Ajoutez le reste des liens ...*/}
-              <li className="divider"></li>
-              <li><a href="/login">S'inscrire | Se connecter</a></li>
-              <li><a>Vends tes articles</a></li>
+            {/* Contenu du menu mobile simple */}
+            <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[2] p-2 shadow-xl bg-white rounded-box w-64">
+                {mainCategoriesList.map((item, index) => (
+                    <li key={index}><a href="#">{item}</a></li>
+                ))}
+                <li className="divider"></li>
+                <li><a href="#">S'inscrire | Se connecter</a></li>
+                <li><a href="#">Vends tes articles</a></li>
             </ul>
           </div>
-          {/* Nouveau logo UMMALL */}
-          <a className="btn btn-ghost normal-case text-xl font-bold  ">
-            U M MALL
+          
+          {/* Logo UMMALL (Style Etsy) */}
+          <a className="text-primary text-2xl sm:text-3xl font-bold tracking-tighter whitespace-nowrap">
+            UMMALL
           </a>
+          
+          {/* Bouton Catégories (Desktop) - Style Liste Haute de image_bde539.png */}
+             <div className="dropdown dropdown-bottom dropdown-end hidden lg:block">
+            <label tabIndex={0} className="btn btn-ghost btn-sm text-text-dark flex items-center hover:bg-gray-100 cursor-pointer">
+              <Menu className="h-5 w-5 mr-2" />
+              Catégories
+            </label>
+            
+                       {/* Contenu du Menu Déroulant (Liste simple, haute) */}
+            <ul tabIndex={0} className="dropdown-content z-[50] menu p-0 shadow-2xl bg-white rounded-lg w-64 mt-2 max-h-96 overflow-y-auto border border-gray-200">
+                {/* Suppression du positionnement "bottom" par défaut de DaisyUI pour le positionnement latéral */}
+                {mainCategoriesList.map((item, index) => (
+                    <li key={index} className="w-full">
+                        <a 
+                            href="#" 
+                            className={`px-4 py-2 text-text-dark text-base hover:bg-gray-100 transition-colors duration-100 ${index === 0 ? 'border-b border-gray-200 font-semibold bg-gray-50' : ''}`}
+                        >
+                            {item}
+                        </a>
+                    </li>
+                ))}
+            </ul>
+          </div>
         </div>
 
-        {/* Partie centrale : Sélecteur d'articles et Barre de recherche */}
-        <div className="navbar-center flex-grow flex items-center max-w-2xl mx-auto">
-          {/* Sélecteur d'articles séparé de la barre de recherche */}
-          <div className="hidden lg:flex dropdown mr-2">
-            <label tabIndex={0} className="btn btn-ghost normal-case text-text-dark m-1">
-              Articles <ChevronDown className="inline h-4 w-4 ml-1" />
-            </label>
-            <ul tabIndex={0} className="menu dropdown-content z-[1] p-2 shadow bg-white rounded-box w-52">
-              <li><a>Tous les articles</a></li>
-              <li><a>Mode</a></li>
-              <li><a>Maison</a></li>
-            </ul>
-          </div>
-          {/* Barre de recherche proprement dite */}
-          <div className="form-control flex-grow flex items-center bg-gray-100 rounded-lg p-2">
-            <Search className="h-5 w-5 text-gray-500" />
-            <input type="text" placeholder="Rechercher des articles..." className="input input-ghost w-full bg-transparent focus:outline-none" />
+
+        {/* --- PARTIE CENTRALE : Recherche (RESTAURÉE) --- */}
+        <div className="hidden lg:flex flex-grow max-w-2xl mx-auto items-center">
+            <div className="relative flex items-center rounded-full border border-gray-400 overflow-hidden bg-white w-full">
+                <input type="text" placeholder="Cherchez ce que vous voulez..." className="w-full pl-4 py-2 pr-16 text-gray-800 bg-transparent focus:outline-none" />
+                <button className="absolute right-0 top-0 h-full w-14 flex items-center justify-center bg-primary text-white rounded-r-full">
+                <Search className="h-6 w-6" />
+                </button>
             </div>
         </div>
 
-        {/* Partie droite : Boutons d'action, Aide, Langue */}
-        <div className="navbar-end w-auto lg:w-2/5 flex items-center space-x-2 md:space-x-4 ml-4">
-          <button className="btn btn-ghost btn-sm hidden md:flex text-text-dark border border-gray-300 hover:bg-gray-200" onClick={() => navigate("/login")}>
-            S'inscrire | Se connecter
-          </button>
-          <button className="btn bg-primary text-white btn-sm hover:bg-orange-600 border-none hidden md:flex">
-            Vends tes articles
-          </button>
+
+        {/* --- PARTIE DROITE : Actions --- */}
+        <div className="flex items-center space-x-3 ml-4">
           
-          <button className="btn btn-ghost btn-circle text-text-dark hidden md:flex">
-            <HelpCircle className="h-5 w-5" />
-          </button>
-          <div className="dropdown dropdown-end hidden md:flex">
-            <label tabIndex={0} className="btn btn-ghost normal-case text-text-dark">
-              FR <ChevronDown className="inline h-4 w-4 ml-1" />
-            </label>
-            <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-white rounded-box w-32">
-              <li><a>EN</a></li>
-              <li><a>ch</a></li>
-            </ul>
-          </div>
+          <a href="#" className="text-text-dark hover:text-gray-700 lg:hidden">
+            <Search className="h-6 w-6" /> 
+          </a>
+          
+          <a href="#" className="hidden lg:block text-text-dark font-semibold whitespace-nowrap hover:text-gray-700">
+            Se connecter
+          </a>
+
+          <a href="#" className="hidden lg:flex text-text-dark hover:text-gray-700">
+            <Heart className="h-6 w-6" />
+          </a>
+          <a href="#" className="hidden lg:flex text-text-dark hover:text-gray-700">
+            <Gift className="h-6 w-6" />
+          </a>
+          
+          <a href="#" className="text-text-dark hover:text-gray-700">
+            <ShoppingBag className="h-6 w-6" />
+          </a>
         </div>
       </div>
+      
+      {/* 2. BARRE DE RECHERCHE MOBILE (Sous le header, cachée sur PC) */}
+       <div className="lg:hidden p-3 pt-0">
+          <div className="flex items-center bg-gray-100 rounded-lg p-2 w-full">
+              <Search className="h-5 w-5 text-gray-500 mx-2" />
+              <input type="text" placeholder="Rechercher des articles..." className="input input-ghost w-full bg-transparent focus:outline-none" />
+          </div>
+      </div>
 
-      {/* Deuxième barre : Catégories principales */}
-  <div className="hidden lg:flex justify-center bg-background border-t border-gray-200 py-2 text-sm text-text-dark">
-        <div className="flex space-x-6 px-4">
-          {['Femmes', 'Hommes', 'Articles de créateurs', 'Enfants', 'Maison', 'Électronique', 'Divertissement', 'Loisirs et collections', 'Sport', 'À propos', 'Notre plateforme'].map((item, index) => (
+      
+      {/* --- BARRE SECONDAIRE : Catégories (PC Seulement) --- */}
+      <div className="hidden lg:block border-t border-gray-200 py-2">
+        <div className="container mx-auto flex justify-center text-sm space-x-8 px-4 text-text-dark">
+          {secondaryCategories.map((item, index) => (
             <a 
               key={index} 
               href="#" 
-              className="relative group text-text-dark hover:text-primary transition-colors duration-200"
+              className={`flex items-center space-x-1 p-1 transition-colors duration-150 ${item.name === "Favoris d'Halloween" ? 'bg-gray-200 rounded-lg px-3 py-1 font-semibold text-text-dark' : 'hover:text-primary'}`}
             >
-              {item}
-              {/* Le soulignement qui glisse */}
-              <span className="absolute left-0 bottom-0 h-[2px] w-0 bg-primary transition-all duration-300 group-hover:w-full"></span>
+              {item.icon && <item.icon className="h-4 w-4" />}
+              <span>{item.name}</span>
             </a>
           ))}
         </div>
       </div>
+
     </header>
   );
 }
