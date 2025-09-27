@@ -2,6 +2,7 @@
 import React from 'react';
 import { Search, ChevronDown, HelpCircle, Menu } from 'lucide-react';
 import { useNavigate } from "react-router-dom";
+import SidebarButton from './sidebarbutton'; 
 import { linearGradient } from 'framer-motion/client';
 
 
@@ -31,6 +32,7 @@ function Header() {
               <li><a>Vends tes articles</a></li>
             </ul>
           </div>
+         <SidebarButton />
           {/* Nouveau logo UMMALL */}
           <a className="btn btn-ghost normal-case text-xl font-bold  ">
             U M MALL
@@ -92,21 +94,6 @@ function Header() {
       </div>
 
       {/* Deuxième barre : Catégories principales */}
-  <div className="hidden lg:flex justify-center bg-background border-t border-gray-200 py-2 text-sm text-text-dark">
-        <div className="flex space-x-6 px-4">
-          {['À propos', 'Notre plateforme'].map((item, index) => (
-            <a 
-              key={index} 
-              href="#" 
-              className="relative group text-text-dark hover:text-primary transition-colors duration-200"
-            >
-              {item}
-              {/* Le soulignement qui glisse */}
-              <span className="absolute left-0 bottom-0 h-[2px] w-0 bg-primary transition-all duration-300 group-hover:w-full"></span>
-            </a>
-          ))}
-        </div>
-      </div>
     </header>
   );
 }

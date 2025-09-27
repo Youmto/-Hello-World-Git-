@@ -1,8 +1,9 @@
 // src/components/Footer.jsx
 import React from 'react';
-import { Facebook, Linkedin, Instagram } from 'lucide-react';
+import { Facebook, Linkedin, Instagram, Mail } from 'lucide-react';
 import appStore from '../assets/app-store.png';
 import googlePlay from '../assets/google-play.webp';
+import '../styles/Footer.css'
 
 const sections = [
   {
@@ -34,15 +35,25 @@ function Footer() {
           ))}
 
           <div className="col-span-1 md:col-span-2">
-            <h4 className="text-sm font-bold text-text-dark mb-4">Téléchargez l'application</h4>
-            <div className="flex space-x-4 mb-4">
-              <a href="#"><img src={appStore} alt="App Store" className="h-10" /></a>
-              <a href="#"><img src={googlePlay} alt="Google Play" className="h-10" /></a>
-            </div>
-            <div className="flex space-x-4">
-              <a href="#" className="text-gray-600 hover:text-primary"><Facebook size={24} /></a>
-              <a href="#" className="text-gray-600 hover:text-primary"><Linkedin size={24} /></a>
-              <a href="#" className="text-gray-600 hover:text-primary"><Instagram size={24} /></a>
+            <h4 className="text-sm font-bold text-text-dark mb-4 text-center">Contactez Nous</h4>
+            <div className="flex space-x-4 mb-4 flex items-center justify-center">
+              <div className="main">
+                <div className="up"><button class="card1">
+                <Facebook size={24} />
+              </button>
+              <button className="card2">
+                <Linkedin size={24}/>
+              </button>
+              </div>
+              <div className="down">
+                <button className="card3">
+                  <Instagram size={24}/>
+                </button>
+                <button className="card4">
+                  <Mail size={24}/>
+                </button>
+              </div>
+              </div>
             </div>
           </div>
         </div>
