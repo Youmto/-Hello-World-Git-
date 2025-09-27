@@ -40,7 +40,7 @@ function Header() {
                     <li key={index}><a href="#">{item}</a></li>
                 ))}
                 <li className="divider"></li>
-                <li><a href="#">S'inscrire | Se connecter</a></li>
+                <li><a href="/login">S'inscrire | Se connecter</a></li>
                 <li><a href="#">Vends tes articles</a></li>
             </ul>
           </div>
@@ -93,7 +93,7 @@ function Header() {
             <Search className="h-6 w-6" /> 
           </a>
           
-          <a href="#" className="hidden lg:block text-text-dark font-semibold whitespace-nowrap hover:text-gray-700">
+          <a href="/login" className="hidden lg:block text-text-dark font-semibold whitespace-nowrap hover:text-gray-700">
             Se connecter
           </a>
 
