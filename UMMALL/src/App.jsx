@@ -1,25 +1,58 @@
-// src/App.jsx
+/ ============================================
+// FICHIER 5: src/App.jsx (VERSION FINALE AVEC TOAST)
+// ============================================
+
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Product from '../pages/product';
-import Login from '../pages/login';
-import Signup from '../pages/signup';
-import PageNotFound from '../pages/pagenotfound';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Header from './components/layout/Header';
+import Footer from './components/layout/Footer';
+
+// Pages
+import HomePage from './pages/HomePage';
+import ProductPage from './pages/ProductPage';
+import CartPage from './pages/CartPage';
+import CheckoutPage from './pages/CheckoutPage';
+import FavoritesPage from './pages/FavoritesPage';
+import SearchPage from './pages/SearchPage';
+import CategoryPage from './pages/CategoryPage';
+import ProfilePage from './pages/ProfilePage';
+import NotFoundPage from './pages/NotFoundPage';
+
+// Context Providers
+import { AuthProvider } from './context/AuthContext';
+import { CartProvider } from './context/CartContext';
+import { FavoritesProvider } from './context/FavoritesContext';
+import { ToastProvider } from './components/common/Toast';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-          {/* <Route index element={<HomePage />} /> */}
-          <Route index element={<Product />} />
-          <Route path="/product" element={<Product />} />
-          {/* <Route path="reset-password" element={<ResetPasswordPage />} />
-          <Route path="forgot-password" element={<ForgotPasswordPage />} /> */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path='*' element={<PageNotFound/>} />
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <CartProvider>
+        <FavoritesProvider>
+          <ToastProvider>
+            <Router>
+              <div className="flex flex-col min-h-screen bg-background text-text-dark">
+                <Header />
+                <main className="flex-grow">
+                  <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/product/:id" element={<ProductPage />} />
+                    <Route path="/cart" element={<CartPage />} />
+                    <Route path="/checkout" element={<CheckoutPage />} />
+                    <Route path="/favorites" element={<FavoritesPage />} />
+                    <Route path="/search" element={<SearchPage />} />
+                    <Route path="/category/:slug" element={<CategoryPage />} />
+                    <Route path="/profile/*" element={<ProfilePage />} />
+                    <Route path="*" element={<NotFoundPage />} />
+                  </Routes>
+                </main>
+                <Footer />
+              </div>
+            </Router>
+          </ToastProvider>
+        </FavoritesProvider>
+      </CartProvider>
+    </AuthProvider>
   );
 }
 
