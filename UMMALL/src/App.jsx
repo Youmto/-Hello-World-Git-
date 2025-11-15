@@ -1,7 +1,3 @@
-/ ============================================
-// FICHIER 5: src/App.jsx (VERSION FINALE AVEC TOAST)
-// ============================================
-
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/layout/Header';
@@ -18,7 +14,7 @@ import CategoryPage from './pages/CategoryPage';
 import ProfilePage from './pages/ProfilePage';
 import NotFoundPage from './pages/NotFoundPage';
 
-// Context Providers
+// Contexts
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import { FavoritesProvider } from './context/FavoritesContext';

@@ -1,7 +1,8 @@
 // src/components/HeroSection.jsx
 import React from 'react';
 // Vous pouvez utiliser une image depuis votre dossier assets ou un lien public
-import heroImage from '../assets/hero-image.png';
+
+const heroImage = 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200';
 
 function HeroSection() {
   return (
