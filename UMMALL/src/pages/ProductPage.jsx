@@ -33,7 +33,8 @@ import { formatPrice, formatRelativeDate } from '../utils/formatters';
 import { CONDITION_LABELS } from '../utils/constants';
 
 // Import des composants spécifiques
-import ProductImageGallery from '../components/product/ProductImageGallery';
+// import ProductImageGallery from '../components/product/ProductImageGallery';
+import ProductImageGallery from '../components/product/ProductImages';
 import SellerCard from '../components/product/SellerCard';
 import ProductReviews from '../components/product/ProductReviews';
 import RelatedProducts from '../components/product/RelatedProducts';
