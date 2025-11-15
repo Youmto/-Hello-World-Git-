@@ -1,8 +1,8 @@
 // src/components/Footer.jsx
 import React from 'react';
 import { Facebook, Linkedin, Instagram } from 'lucide-react';
-import appStore from '../assets/app-store.png';
-import googlePlay from '../assets/google-play.webp';
+import appStore from '../../assets/app-store.png';
+import googlePlay from '../../assets/google-play.webp';
 
 const sections = [
   {
