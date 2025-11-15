@@ -1,9 +1,8 @@
 // src/components/Footer.jsx
 import React from 'react';
 import { Facebook, Linkedin, Instagram } from 'lucide-react';
-import appStore from '../../assets/app-store.png';
-import googlePlay from '../../assets/google-play.webp';
-
+const appStore = 'https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg';
+const googlePlay = 'https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png';
 const sections = [
   {
     title: "Découvrir",
