@@ -1,6 +1,5 @@
-
 // ============================================
-// FICHIER 1: src/components/product/ProductImageGallery.jsx
+// FICHIER: src/components/product/ProductImageGallery.jsx
 // Galerie d'images avec zoom et navigation fluide
 // ============================================
 

@@ -1,21 +1,24 @@
 // ============================================
-// FICHIER 2: src/components/product/SellerCard.jsx
+// FICHIER: src/components/product/SellerCard.jsx
 // Carte vendeur avec informations et actions
 // ============================================
 
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Star, MessageCircle, MapPin, Clock, Award, ChevronRight } from 'lucide-react';
-import { formatRelativeDate } from '../../utils/formatters';
 
 function SellerCard({ seller }) {
+  if (!seller) {
+    return null;
+  }
+
   return (
     <div className="bg-white rounded-xl border-2 border-gray-200 p-6">
       <h3 className="text-lg font-bold text-gray-900 mb-4">Vendu par</h3>
       
       <div className="flex items-start gap-4 mb-4">
         <img
-          src={seller.avatar}
+          src={seller.avatar || 'https://via.placeholder.com/64'}
           alt={seller.name}
           className="w-16 h-16 rounded-full object-cover ring-2 ring-primary ring-offset-2"
         />
@@ -30,19 +33,19 @@ function SellerCard({ seller }) {
           <div className="flex items-center gap-4 text-sm text-gray-600 mb-2">
             <div className="flex items-center gap-1">
               <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-              <span className="font-semibold">{seller.rating}</span>
-              <span>({seller.reviewCount} avis)</span>
+              <span className="font-semibold">{seller.rating || 4.5}</span>
+              <span>({seller.reviewCount || 0} avis)</span>
             </div>
           </div>
 
           <div className="flex flex-wrap gap-3 text-xs text-gray-600">
             <div className="flex items-center gap-1">
               <Clock className="w-4 h-4" />
-              <span>Répond en {seller.responseTime}</span>
+              <span>Répond en {seller.responseTime || '24h'}</span>
             </div>
             <div className="flex items-center gap-1">
               <MapPin className="w-4 h-4" />
-              <span>Membre depuis {new Date(seller.memberSince).getFullYear()}</span>
+              <span>Membre depuis {seller.memberSince ? new Date(seller.memberSince).getFullYear() : '2023'}</span>
             </div>
           </div>
         </div>
@@ -54,7 +57,7 @@ function SellerCard({ seller }) {
           Contacter le vendeur
         </button>
         
-        <Link to={`/seller/${seller.id}`}>
+        <Link to={`/seller/${seller.id || 1}`}>
           <button className="w-full border-2 border-gray-200 text-gray-700 py-3 rounded-lg font-semibold hover:border-primary hover:text-primary hover:bg-orange-50 transition-all flex items-center justify-center gap-2">
             Voir la boutique
             <ChevronRight className="w-5 h-5" />

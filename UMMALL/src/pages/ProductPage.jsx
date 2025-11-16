@@ -1,44 +1,25 @@
 // ============================================
-// FICHIER: src/pages/ProductPage.jsx
-// Design Premium inspiré des meilleurs sites e-commerce
+// PRODUCT PAGE v2.0 - REDESIGN COMPLET
+// Page produit premium avec tous les détails
 // ============================================
 
 import React, { useState, useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import {
-  Heart,
-  Share2,
-  ShoppingBag,
-  Shield,
-  Truck,
-  RefreshCw,
-  Star,
-  MapPin,
-  MessageCircle,
-  ChevronRight,
-  CheckCircle,
-  AlertCircle,
-  Package,
-  Award
+  Heart, Share2, ShoppingBag, Shield, Truck, RefreshCw,
+  Star, MapPin, MessageCircle, ChevronRight, CheckCircle,
+  AlertCircle, Package, Award, TrendingUp, Eye, Clock
 } from 'lucide-react';
 
 import { useCart } from '../context/CartContext';
 import { useFavorites } from '../context/FavoritesContext';
 import { useToast } from '../components/common/Toast';
 import Button from '../components/common/Button';
-import Badge from '../components/common/Badge';
-import Breadcrumb from '../components/common/Breadcrumb';
-import { ProductCardSkeleton } from '../components/common/Loader';
-import { formatPrice, formatRelativeDate } from '../utils/formatters';
-import { CONDITION_LABELS } from '../utils/constants';
-
-// Import des composants spécifiques
-// import ProductImageGallery from '../components/product/ProductImageGallery';
-import ProductImageGallery from '../components/product/ProductImages';
+import ProductImageGallery from '../components/product/ProductImageGallery';
 import SellerCard from '../components/product/SellerCard';
 import ProductReviews from '../components/product/ProductReviews';
-import RelatedProducts from '../components/product/RelatedProducts';
 import TrustBadges from '../components/product/TrustBadges';
+import ProductCard from '../components/home/ProductCard';
 
 function ProductPage() {
   const { id } = useParams();
@@ -52,305 +33,278 @@ function ProductPage() {
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState(null);
-  const [showShareModal, setShowShareModal] = useState(false);
   const [activeTab, setActiveTab] = useState('description');
 
-  // Charger le produit
+  // Mock product data
   useEffect(() => {
-    loadProduct();
+    setLoading(true);
+    
+    // Simuler un chargement API
+    setTimeout(() => {
+      setProduct({
+        id: parseInt(id),
+        title: "Nike Air Max 90 - Édition Limitée",
+        brand: "Nike",
+        price: 89.99,
+        originalPrice: 149.99,
+        condition: "Comme neuf",
+        stock: 3,
+        images: [
+          "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800",
+          "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=800",
+          "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=800",
+          "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800"
+        ],
+        description: `Découvrez les iconiques Nike Air Max 90 dans cette édition limitée. 
+        
+Caractéristiques :
+• Condition : Comme neuf, portées 2 fois
+• Matière : Cuir premium et mesh respirant
+• Technologie Air Max visible pour un confort optimal
+• Semelle extérieure en caoutchouc durable
+• Coloris : Blanc/Noir/Rouge
+
+Ces sneakers iconiques allient style intemporel et confort exceptionnel. Parfaites pour un usage quotidien ou pour compléter votre collection.`,
+        
+        sizes: ['38', '39', '40', '41', '42', '43'],
+        colors: ['Blanc/Noir', 'Noir/Blanc', 'Rouge/Blanc'],
+        
+        seller: {
+          id: 1,
+          name: "Sophie Martin",
+          avatar: "https://i.pravatar.cc/150?img=5",
+          rating: 4.8,
+          reviewCount: 127,
+          verifiedSeller: true,
+          responseTime: "2h",
+          memberSince: "2022-03-15"
+        },
+        
+        reviews: [
+          {
+            id: 1,
+            user: "Marie L.",
+            rating: 5,
+            comment: "Produit conforme à la description, expédition rapide !",
+            date: "2024-01-15",
+            helpful: 12
+          },
+          {
+            id: 2,
+            user: "Thomas D.",
+            rating: 4,
+            comment: "Très bon état, légères traces d'usure mais rien de grave.",
+            date: "2024-01-10",
+            helpful: 8
+          },
+          {
+            id: 3,
+            user: "Julie R.",
+            rating: 5,
+            comment: "Parfait ! Vendeur sérieux et article impeccable.",
+            date: "2024-01-05",
+            helpful: 15
+          }
+        ],
+
+        relatedProducts: [] // À remplir avec des produits similaires
+      });
+      
+      setLoading(false);
+    }, 800);
   }, [id]);
 
-  const loadProduct = async () => {
-    setLoading(true);
-    try {
-      // TODO: Remplacer par l'appel API réel
-      // const data = await productService.getById(id);
-      
-      // Données mockées pour la démo
-      setTimeout(() => {
-        setProduct({
-          id: parseInt(id),
-          title: "Nike Air Max 90 - Édition Limitée",
-          brand: "Nike",
-          category: { id: 2, name: "Chaussures", slug: "chaussures" },
-          price: 89.99,
-          originalPrice: 149.99,
-          condition: "comme_neuf",
-          stock: 3,
-          description: `Découvrez les iconiques Nike Air Max 90 dans cette édition limitée qui célèbre le style intemporel et le confort légendaire.
-
-**Caractéristiques principales :**
-• Amorti Air Max visible pour un confort optimal
-• Empiècements en cuir et mesh pour une durabilité accrue
-• Design emblématique qui traverse les décennies
-• Semelle en caoutchouc avec motif gaufré pour une adhérence supérieure
-
-**Détails du produit :**
-• État : Comme neuf, porté 2-3 fois seulement
-• Aucun défaut visible
-• Boîte d'origine incluse
-• Livré avec facture d'achat
-
-Parfait pour compléter un look streetwear ou casual. Ces baskets iconiques s'adaptent à tous les styles !`,
-          sizes: ['38', '39', '40', '41', '42', '43'],
-          colors: ['Blanc/Rouge', 'Noir/Blanc'],
-          images: [
-            'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800',
-            'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=800',
-            'https://images.unsplash.com/photo-1605348532760-6753d2c43329?w=800',
-            'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=800'
-          ],
-          seller: {
-            id: 1,
-            name: "Marie Dubois",
-            avatar: "https://i.pravatar.cc/150?img=5",
-            rating: 4.9,
-            reviewCount: 234,
-            responseTime: "< 2h",
-            memberSince: "2022-03-15",
-            verifiedSeller: true
-          },
-          likes: 247,
-          views: 1523,
-          createdAt: "2025-01-10T10:30:00Z",
-          shipping: {
-            methods: [
-              { name: "Standard", price: 5.99, duration: "3-5 jours" },
-              { name: "Express", price: 12.99, duration: "1-2 jours" },
-              { name: "Retrait en main propre", price: 0, duration: "À convenir" }
-            ],
-            freeShippingThreshold: 50
-          },
-          reviews: [
-            {
-              id: 1,
-              user: "Jean Martin",
-              rating: 5,
-              comment: "Produit conforme à la description, livraison rapide. Très satisfait !",
-              date: "2025-01-08T14:20:00Z",
-              helpful: 12
-            },
-            {
-              id: 2,
-              user: "Sophie Laurent",
-              rating: 5,
-              comment: "Excellent état, comme neuf effectivement. Vendeur très réactif.",
-              date: "2025-01-05T09:15:00Z",
-              helpful: 8
-            }
-          ]
-        });
-        setLoading(false);
-      }, 800);
-    } catch (error) {
-      toast.error("Erreur lors du chargement du produit");
-      setLoading(false);
-    }
-  };
-
-  const handleAddToCart = () => {
-    if (product.sizes && !selectedSize) {
-      toast.warning("Veuillez sélectionner une taille");
-      return;
-    }
-    
-    addToCart(product, quantity);
-    toast.success(
-      <div className="flex items-center gap-2">
-        <CheckCircle className="w-5 h-5" />
-        <span>Produit ajouté au panier !</span>
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-neutral-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-primary-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-neutral-600 font-semibold">Chargement...</p>
+        </div>
       </div>
     );
-  };
-
-  const handleBuyNow = () => {
-    handleAddToCart();
-    navigate('/checkout');
-  };
-
-  const handleToggleFavorite = () => {
-    toggleFavorite(product);
-    if (isFavorite(product.id)) {
-      toast.info("Retiré des favoris");
-    } else {
-      toast.success("Ajouté aux favoris ❤️");
-    }
-  };
-
-  const handleShare = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: product.title,
-          text: `Découvrez ${product.title} sur UMMALL`,
-          url: window.location.href
-        });
-      } catch (error) {
-        console.log('Partage annulé');
-      }
-    } else {
-      setShowShareModal(true);
-    }
-  };
-
-  const discount = product?.originalPrice 
-    ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
-    : 0;
-
-  if (loading) {
-    return <ProductPageSkeleton />;
   }
 
   if (!product) {
     return (
-      <div className="container mx-auto px-4 py-16 text-center">
-        <AlertCircle className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Produit non trouvé</h2>
-        <p className="text-gray-600 mb-6">Ce produit n'existe pas ou a été supprimé.</p>
-        <Button onClick={() => navigate('/')}>Retour à l'accueil</Button>
+      <div className="min-h-screen bg-neutral-50 flex items-center justify-center">
+        <div className="text-center">
+          <AlertCircle className="w-16 h-16 text-neutral-400 mx-auto mb-4" />
+          <h2 className="text-2xl font-bold text-neutral-900 mb-2">Produit non trouvé</h2>
+          <p className="text-neutral-600 mb-6">Ce produit n'existe pas ou a été supprimé.</p>
+          <Button onClick={() => navigate('/')}>Retour à l'accueil</Button>
+        </div>
       </div>
     );
   }
 
-  const breadcrumbItems = [
-    { label: product.category.name, href: `/category/${product.category.slug}` },
-    { label: product.title }
-  ];
+  const discount = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
+  const isProductFavorite = isFavorite(product.id);
+
+  const handleAddToCart = () => {
+    if (product.stock === 0) {
+      toast.error('Produit en rupture de stock');
+      return;
+    }
+    
+    addToCart(product, quantity);
+    toast.success('Ajouté au panier ! 🛍️');
+  };
+
+  const handleToggleFavorite = () => {
+    toggleFavorite(product);
+    toast.success(isProductFavorite ? 'Retiré des favoris' : 'Ajouté aux favoris ❤️');
+  };
 
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="min-h-screen bg-gradient-to-b from-neutral-50 to-white">
+      
       {/* Breadcrumb */}
-      <div className="bg-white border-b">
-        <div className="container mx-auto px-4">
-          <Breadcrumb items={breadcrumbItems} />
+      <div className="bg-white border-b border-neutral-200">
+        <div className="container-fluid mx-auto py-4">
+          <div className="flex items-center gap-2 text-sm text-neutral-600">
+            <Link to="/" className="hover:text-primary-600 transition-colors">Accueil</Link>
+            <ChevronRight className="w-4 h-4" />
+            <Link to="/category/chaussures" className="hover:text-primary-600 transition-colors">Chaussures</Link>
+            <ChevronRight className="w-4 h-4" />
+            <span className="text-neutral-900 font-semibold">{product.title}</span>
+          </div>
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+      <div className="container-fluid mx-auto py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
           
-          {/* GAUCHE: Galerie d'images */}
-          <div className="space-y-4">
+          {/* LEFT: Images */}
+          <div>
             <ProductImageGallery images={product.images} />
-            
-            {/* Trust badges sous les images */}
-            <TrustBadges />
+            <div className="mt-6">
+              <TrustBadges />
+            </div>
           </div>
 
-          {/* DROITE: Informations produit */}
+          {/* RIGHT: Product Info */}
           <div className="space-y-6">
             
-            {/* En-tête avec titre et actions */}
+            {/* Header */}
             <div>
-              <div className="flex items-start justify-between mb-2">
+              {/* Brand + Actions */}
+              <div className="flex items-start justify-between mb-3">
                 <div className="flex-1">
-                  <p className="text-sm text-gray-600 mb-1">{product.brand}</p>
-                  <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                  <p className="text-sm font-semibold uppercase tracking-wider text-primary-600 mb-2">
+                    {product.brand}
+                  </p>
+                  <h1 className="text-4xl font-bold text-neutral-900 leading-tight">
                     {product.title}
                   </h1>
                 </div>
                 
-                {/* Actions: Favoris & Partage */}
+                {/* Actions */}
                 <div className="flex gap-2 ml-4">
                   <button
                     onClick={handleToggleFavorite}
-                    className="p-3 rounded-full border-2 border-gray-200 hover:border-primary hover:bg-orange-50 transition-all"
-                    aria-label="Ajouter aux favoris"
+                    className={`
+                      p-3 rounded-xl border-2 transition-all duration-300
+                      ${isProductFavorite
+                        ? 'bg-red-500 border-red-500 text-white scale-110'
+                        : 'bg-white border-neutral-200 text-neutral-700 hover:border-red-500 hover:text-red-500'
+                      }
+                    `}
                   >
-                    <Heart
-                      className={`w-6 h-6 ${
-                        isFavorite(product.id)
-                          ? 'fill-red-500 text-red-500'
-                          : 'text-gray-600'
-                      }`}
-                    />
+                    <Heart className={`w-6 h-6 ${isProductFavorite ? 'fill-current' : ''}`} />
                   </button>
-                  <button
-                    onClick={handleShare}
-                    className="p-3 rounded-full border-2 border-gray-200 hover:border-primary hover:bg-orange-50 transition-all"
-                    aria-label="Partager"
-                  >
-                    <Share2 className="w-6 h-6 text-gray-600" />
+
+                  <button className="p-3 rounded-xl border-2 border-neutral-200 text-neutral-700 hover:border-primary-500 hover:text-primary-500 transition-all">
+                    <Share2 className="w-6 h-6" />
                   </button>
                 </div>
               </div>
 
-              {/* Badges et statistiques */}
-              <div className="flex flex-wrap items-center gap-3">
-                <Badge variant="success">{CONDITION_LABELS[product.condition]}</Badge>
-                {discount > 0 && (
-                  <Badge variant="danger">-{discount}%</Badge>
-                )}
-                <div className="flex items-center text-sm text-gray-600">
-                  <Heart className="w-4 h-4 mr-1" />
-                  <span>{product.likes} favoris</span>
+              {/* Rating + Views */}
+              <div className="flex items-center gap-6 text-sm">
+                <div className="flex items-center gap-2">
+                  <div className="flex gap-0.5">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+                  <span className="font-semibold text-neutral-900">4.8</span>
+                  <span className="text-neutral-600">({product.reviews.length} avis)</span>
                 </div>
-                <div className="flex items-center text-sm text-gray-600">
-                  <span>•</span>
-                  <span className="ml-2">{product.views} vues</span>
+
+                <div className="flex items-center gap-1.5 text-neutral-600">
+                  <Eye className="w-4 h-4" />
+                  <span>234 vues</span>
                 </div>
               </div>
             </div>
 
-            {/* Prix */}
-            <div className="bg-white rounded-xl p-6 border-2 border-gray-200">
+            {/* Price */}
+            <div className="bg-gradient-to-br from-primary-50 to-secondary-50 border-2 border-primary-200 rounded-2xl p-6">
               <div className="flex items-baseline gap-4 mb-2">
-                <span className="text-4xl font-bold text-primary">
-                  {formatPrice(product.price)}
-                </span>
+                <div className="text-5xl font-bold bg-gradient-to-r from-primary-600 to-pink-600 bg-clip-text text-transparent">
+                  {product.price}€
+                </div>
                 {product.originalPrice && (
-                  <span className="text-xl text-gray-400 line-through">
-                    {formatPrice(product.originalPrice)}
-                  </span>
+                  <div className="text-2xl text-neutral-400 line-through font-semibold">
+                    {product.originalPrice}€
+                  </div>
+                )}
+                {discount > 0 && (
+                  <div className="px-4 py-2 bg-gradient-to-r from-red-500 to-pink-600 text-white rounded-full font-bold text-sm">
+                    -{discount}%
+                  </div>
                 )}
               </div>
-              <p className="text-sm text-green-600 font-semibold">
-                Vous économisez {formatPrice(product.originalPrice - product.price)} !
+              <p className="text-sm text-neutral-600">
+                Économisez {(product.originalPrice - product.price).toFixed(2)}€
               </p>
-              
-              {/* Stock disponible */}
-              <div className="mt-4 flex items-center gap-2">
-                {product.stock > 5 ? (
-                  <>
-                    <CheckCircle className="w-5 h-5 text-green-500" />
-                    <span className="text-sm font-semibold text-green-600">
-                      En stock - Livraison rapide
-                    </span>
-                  </>
-                ) : product.stock > 0 ? (
-                  <>
-                    <AlertCircle className="w-5 h-5 text-orange-500" />
-                    <span className="text-sm font-semibold text-orange-600">
-                      Plus que {product.stock} en stock !
-                    </span>
-                  </>
-                ) : (
-                  <>
-                    <AlertCircle className="w-5 h-5 text-red-500" />
-                    <span className="text-sm font-semibold text-red-600">
-                      Rupture de stock
-                    </span>
-                  </>
-                )}
+            </div>
+
+            {/* Condition + Stock */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="p-4 bg-white border-2 border-neutral-200 rounded-xl">
+                <div className="text-sm text-neutral-600 mb-1">État</div>
+                <div className="font-bold text-neutral-900 flex items-center gap-2">
+                  <CheckCircle className="w-5 h-5 text-green-500" />
+                  {product.condition}
+                </div>
+              </div>
+
+              <div className="p-4 bg-white border-2 border-neutral-200 rounded-xl">
+                <div className="text-sm text-neutral-600 mb-1">Disponibilité</div>
+                <div className="font-bold text-neutral-900 flex items-center gap-2">
+                  {product.stock > 0 ? (
+                    <>
+                      <Package className="w-5 h-5 text-green-500" />
+                      {product.stock} en stock
+                    </>
+                  ) : (
+                    <>
+                      <AlertCircle className="w-5 h-5 text-red-500" />
+                      Rupture
+                    </>
+                  )}
+                </div>
               </div>
             </div>
 
-            {/* Sélection taille (si applicable) */}
+            {/* Size Selection */}
             {product.sizes && (
-              <div className="bg-white rounded-xl p-6 border-2 border-gray-200">
-                <label className="block text-sm font-bold text-gray-900 mb-3">
-                  Choisissez votre taille
+              <div>
+                <label className="block text-sm font-semibold text-neutral-900 mb-3">
+                  Taille
                 </label>
-                <div className="grid grid-cols-6 gap-2">
+                <div className="flex flex-wrap gap-2">
                   {product.sizes.map((size) => (
                     <button
                       key={size}
                       onClick={() => setSelectedSize(size)}
                       className={`
-                        py-3 px-4 rounded-lg border-2 font-semibold transition-all
+                        px-6 py-3 rounded-xl font-semibold text-sm border-2 transition-all
                         ${selectedSize === size
-                          ? 'border-primary bg-primary text-white'
-                          : 'border-gray-200 hover:border-primary hover:bg-orange-50'
+                          ? 'bg-primary-500 border-primary-500 text-white'
+                          : 'bg-white border-neutral-200 text-neutral-700 hover:border-primary-500'
                         }
                       `}
                     >
@@ -361,199 +315,133 @@ Parfait pour compléter un look streetwear ou casual. Ces baskets iconiques s'ad
               </div>
             )}
 
-            {/* Quantité */}
-            <div className="bg-white rounded-xl p-6 border-2 border-gray-200">
-              <label className="block text-sm font-bold text-gray-900 mb-3">
+            {/* Quantity */}
+            <div>
+              <label className="block text-sm font-semibold text-neutral-900 mb-3">
                 Quantité
               </label>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-4">
                 <button
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  disabled={quantity <= 1}
-                  className="w-10 h-10 rounded-lg border-2 border-gray-200 hover:border-primary hover:bg-orange-50 disabled:opacity-50 disabled:cursor-not-allowed font-bold text-lg"
+                  className="w-12 h-12 rounded-xl border-2 border-neutral-200 hover:border-primary-500 font-bold text-lg transition-all"
                 >
-                  −
+                  -
                 </button>
-                <input
-                  type="number"
-                  value={quantity}
-                  onChange={(e) => setQuantity(Math.max(1, Math.min(product.stock, parseInt(e.target.value) || 1)))}
-                  className="w-16 h-10 text-center border-2 border-gray-200 rounded-lg font-bold text-lg focus:outline-none focus:border-primary"
-                  min="1"
-                  max={product.stock}
-                />
+                <span className="text-2xl font-bold text-neutral-900 w-12 text-center">
+                  {quantity}
+                </span>
                 <button
                   onClick={() => setQuantity(Math.min(product.stock, quantity + 1))}
-                  disabled={quantity >= product.stock}
-                  className="w-10 h-10 rounded-lg border-2 border-gray-200 hover:border-primary hover:bg-orange-50 disabled:opacity-50 disabled:cursor-not-allowed font-bold text-lg"
+                  className="w-12 h-12 rounded-xl border-2 border-neutral-200 hover:border-primary-500 font-bold text-lg transition-all"
                 >
                   +
                 </button>
-                <span className="text-sm text-gray-600 ml-2">
-                  ({product.stock} disponibles)
-                </span>
               </div>
             </div>
 
-            {/* Boutons d'action */}
-            <div className="space-y-3">
-              <Button
-                onClick={handleBuyNow}
-                variant="primary"
-                size="lg"
-                fullWidth
-                disabled={product.stock === 0}
-                className="text-lg font-bold py-4"
-              >
-                <ShoppingBag className="w-6 h-6" />
-                Acheter maintenant
-              </Button>
-              
+            {/* CTA Buttons */}
+            <div className="space-y-3 pt-4">
               <Button
                 onClick={handleAddToCart}
-                variant="outline"
+                disabled={product.stock === 0}
                 size="lg"
                 fullWidth
-                disabled={product.stock === 0 || isInCart(product.id)}
-                className="text-lg font-bold py-4"
+                leftIcon={<ShoppingBag />}
               >
-                {isInCart(product.id) ? 'Déjà dans le panier' : 'Ajouter au panier'}
+                {product.stock > 0 ? 'Ajouter au panier' : 'Rupture de stock'}
+              </Button>
+
+              <Button
+                variant="secondary"
+                size="lg"
+                fullWidth
+                onClick={() => {
+                  handleAddToCart();
+                  navigate('/checkout');
+                }}
+                disabled={product.stock === 0}
+              >
+                Acheter maintenant
               </Button>
             </div>
 
-            {/* Avantages */}
-            <div className="bg-gradient-to-r from-orange-50 to-pink-50 rounded-xl p-6 space-y-3">
-              <div className="flex items-start gap-3">
-                <Truck className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                <div>
-                  <p className="font-semibold text-gray-900">Livraison rapide</p>
-                  <p className="text-sm text-gray-600">Reçu en 3-5 jours ouvrés</p>
-                </div>
+            {/* Quick Info */}
+            <div className="grid grid-cols-3 gap-3 pt-6 border-t border-neutral-200">
+              <div className="text-center p-3">
+                <Shield className="w-6 h-6 text-primary-500 mx-auto mb-2" />
+                <p className="text-xs font-semibold text-neutral-700">Paiement sécurisé</p>
               </div>
-              <div className="flex items-start gap-3">
-                <Shield className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                <div>
-                  <p className="font-semibold text-gray-900">Achat sécurisé</p>
-                  <p className="text-sm text-gray-600">Paiement 100% sécurisé</p>
-                </div>
+              <div className="text-center p-3">
+                <Truck className="w-6 h-6 text-primary-500 mx-auto mb-2" />
+                <p className="text-xs font-semibold text-neutral-700">Livraison 24-48h</p>
               </div>
-              <div className="flex items-start gap-3">
-                <RefreshCw className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                <div>
-                  <p className="font-semibold text-gray-900">Retour facile</p>
-                  <p className="text-sm text-gray-600">14 jours pour changer d'avis</p>
-                </div>
+              <div className="text-center p-3">
+                <RefreshCw className="w-6 h-6 text-primary-500 mx-auto mb-2" />
+                <p className="text-xs font-semibold text-neutral-700">Retour 14 jours</p>
               </div>
             </div>
-
-            {/* Carte vendeur */}
-            <SellerCard seller={product.seller} />
           </div>
         </div>
 
-        {/* Tabs: Description, Avis, Livraison */}
-        <div className="bg-white rounded-xl shadow-sm overflow-hidden mb-12">
-          <div className="border-b">
-            <div className="flex">
-              {['description', 'reviews', 'shipping'].map((tab) => (
-                <button
-                  key={tab}
-                  onClick={() => setActiveTab(tab)}
-                  className={`
-                    px-6 py-4 font-semibold text-sm transition-all border-b-2
-                    ${activeTab === tab
-                      ? 'border-primary text-primary bg-orange-50'
-                      : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-                    }
-                  `}
-                >
-                  {tab === 'description' && 'Description'}
-                  {tab === 'reviews' && `Avis (${product.reviews.length})`}
-                  {tab === 'shipping' && 'Livraison & Retours'}
-                </button>
-              ))}
-            </div>
+        {/* Tabs Section */}
+        <div className="mb-16">
+          {/* Tab Headers */}
+          <div className="flex gap-4 border-b-2 border-neutral-200 mb-8">
+            {['description', 'avis'].map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className={`
+                  px-6 py-4 font-semibold text-lg transition-all relative
+                  ${activeTab === tab
+                    ? 'text-primary-600'
+                    : 'text-neutral-600 hover:text-neutral-900'
+                  }
+                `}
+              >
+                {tab === 'description' ? 'Description' : 'Avis clients'}
+                {activeTab === tab && (
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary-500 to-pink-500" />
+                )}
+              </button>
+            ))}
           </div>
 
-          <div className="p-6">
-            {activeTab === 'description' && (
-              <div className="prose max-w-none">
-                <div className="whitespace-pre-line text-gray-700 leading-relaxed">
+          {/* Tab Content */}
+          {activeTab === 'description' ? (
+            <div className="prose prose-lg max-w-none">
+              <div className="bg-white rounded-2xl p-8 border border-neutral-200">
+                <h3 className="text-2xl font-bold text-neutral-900 mb-4">
+                  Description du produit
+                </h3>
+                <div className="text-neutral-700 leading-relaxed whitespace-pre-line">
                   {product.description}
                 </div>
               </div>
-            )}
+            </div>
+          ) : (
+            <ProductReviews reviews={product.reviews} />
+          )}
+        </div>
 
-            {activeTab === 'reviews' && (
-              <ProductReviews reviews={product.reviews} productId={product.id} />
-            )}
+        {/* Seller Card */}
+        <div className="mb-16">
+          <SellerCard seller={product.seller} />
+        </div>
 
-            {activeTab === 'shipping' && (
-              <div className="space-y-6">
-                <div>
-                  <h3 className="text-lg font-bold mb-4">Options de livraison</h3>
-                  <div className="space-y-3">
-                    {product.shipping.methods.map((method, index) => (
-                      <div key={index} className="flex items-center justify-between p-4 border rounded-lg">
-                        <div className="flex items-center gap-3">
-                          <Package className="w-5 h-5 text-gray-400" />
-                          <div>
-                            <p className="font-semibold">{method.name}</p>
-                            <p className="text-sm text-gray-600">{method.duration}</p>
-                          </div>
-                        </div>
-                        <span className="font-bold text-primary">
-                          {method.price === 0 ? 'Gratuit' : formatPrice(method.price)}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                  {product.shipping.freeShippingThreshold && (
-                    <p className="mt-4 text-sm text-green-600 font-semibold">
-                      🎉 Livraison gratuite dès {formatPrice(product.shipping.freeShippingThreshold)} d'achat
-                    </p>
-                  )}
-                </div>
-
-                <div>
-                  <h3 className="text-lg font-bold mb-4">Politique de retour</h3>
-                  <p className="text-gray-700">
-                    Vous avez 14 jours pour retourner votre article s'il ne vous convient pas.
-                    Le produit doit être dans son état d'origine avec tous les accessoires.
-                    Les frais de retour sont à votre charge sauf en cas de défaut.
-                  </p>
-                </div>
-              </div>
-            )}
+        {/* Related Products */}
+        {product.relatedProducts?.length > 0 && (
+          <div>
+            <h2 className="text-3xl font-bold text-neutral-900 mb-8">
+              Produits similaires
+            </h2>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+              {product.relatedProducts.map((item) => (
+                <ProductCard key={item.id} product={item} />
+              ))}
+            </div>
           </div>
-        </div>
-
-        {/* Produits similaires */}
-        <RelatedProducts currentProductId={product.id} categoryId={product.category.id} />
-      </div>
-    </div>
-  );
-}
-
-// Skeleton de chargement
-function ProductPageSkeleton() {
-  return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="space-y-4">
-          <div className="bg-gray-200 rounded-lg h-96 animate-pulse" />
-          <div className="grid grid-cols-4 gap-2">
-            {[...Array(4)].map((_, i) => (
-              <div key={i} className="bg-gray-200 rounded-lg h-24 animate-pulse" />
-            ))}
-          </div>
-        </div>
-        <div className="space-y-6">
-          <div className="h-8 bg-gray-200 rounded w-3/4 animate-pulse" />
-          <div className="h-12 bg-gray-200 rounded w-1/2 animate-pulse" />
-          <div className="h-32 bg-gray-200 rounded animate-pulse" />
-          <div className="h-16 bg-gray-200 rounded animate-pulse" />
-        </div>
+        )}
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 // ============================================
-// FICHIER 3: src/components/product/TrustBadges.jsx
+// FICHIER: src/components/product/TrustBadges.jsx
 // Badges de confiance pour rassurer l'acheteur
 // ============================================
 
