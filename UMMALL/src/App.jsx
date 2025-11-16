@@ -14,6 +14,9 @@ import CategoryPage from './pages/CategoryPage';
 import ProfilePage from './pages/ProfilePage';
 import NotFoundPage from './pages/NotFoundPage';
 
+// Admin Pages
+import AdminDashboard from './pages/admin/AdminDashboard';
+
 // Contexts
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
@@ -27,7 +30,7 @@ function App() {
         <FavoritesProvider>
           <ToastProvider>
             <Router>
-              <div className="flex flex-col min-h-screen bg-background text-text-dark">
+              {/* <div className="flex flex-col min-h-screen bg-background text-text-dark">
                 <Header />
                 <main className="flex-grow">
                   <Routes>
@@ -40,10 +43,18 @@ function App() {
                     <Route path="/category/:slug" element={<CategoryPage />} />
                     <Route path="/profile/*" element={<ProfilePage />} />
                     <Route path="*" element={<NotFoundPage />} />
+
+
                   </Routes>
                 </main>
                 <Footer />
-              </div>
+              </div> */}
+              <Routes > 
+                {/* Admin Routes */}
+                
+                <Route path="/admin/dashboard" element={<AdminDashboard />} />
+                
+              </Routes>
             </Router>
           </ToastProvider>
         </FavoritesProvider>
