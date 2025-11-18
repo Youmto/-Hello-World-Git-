@@ -22,11 +22,12 @@
    RESET & BASE STYLES
    ================================== */
 
-* {
+/* commented this cause it was affecting the whole project  */
+/* * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
+} */
 
 html {
   scroll-behavior: smooth;

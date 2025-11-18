@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
-    <header>
+    <footer>
       Admin Footer
-    </header>
+    </footer>
   )
 }

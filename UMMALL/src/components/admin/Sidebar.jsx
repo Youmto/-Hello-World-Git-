@@ -1,7 +1,7 @@
-export default function Sidebar() {
+export default function Sidebar({ className = "" }) {
   return (
-    <header>
+    <nav className={`bg-gray-200 p-4 ${className}`}>
       Admin Sidebar
-    </header>
+    </nav>
   )
 }

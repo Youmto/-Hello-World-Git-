@@ -14,14 +14,25 @@ import CategoryPage from './pages/CategoryPage';
 import ProfilePage from './pages/ProfilePage';
 import NotFoundPage from './pages/NotFoundPage';
 
-// Admin Pages
-import AdminDashboard from './pages/admin/AdminDashboard';
-
 // Contexts
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import { FavoritesProvider } from './context/FavoritesContext';
 import { ToastProvider } from './components/common/Toast';
+
+// Admin Pages
+import Dashboard from './pages/admin/Dashboard';
+import Client from './pages/admin/Client';
+import Partner from './pages/admin/Partner';
+import Sale from './pages/admin/Sale';
+import Product from './pages/admin/Product';
+import Setting from './pages/admin/Setting';
+import Profile from './pages/admin/Profile';
+import Admin from './pages/admin/Admin';
+
+
+// Admin Layout
+import { MainLayout } from './components/admin/Layout';
 
 function App() {
   return (
@@ -49,12 +60,20 @@ function App() {
                 </main>
                 <Footer />
               </div> */}
-              <Routes > 
-                {/* Admin Routes */}
-                
-                <Route path="/admin/dashboard" element={<AdminDashboard />} />
-                
-              </Routes>
+                <Routes > 
+                  {/* Admin Routes */}
+                  <Route element={<MainLayout />}>
+                    <Route path="/admin/dashboard" element={<Dashboard />} />
+                    <Route path="/admin/clients" element={<Client />} />
+                    <Route path="/admin/partners" element={<Partner />} />
+                    <Route path="/admin/sales" element={<Sale />} />
+                    <Route path="/admin/products" element={<Product />} />
+                    <Route path="/admin/settings" element={<Setting />} />
+                    <Route path="/admin/profile" element={<Profile />} />
+                    <Route path="/admin/admin" element={<Admin />} />
+                  </Route>
+                  
+                </Routes>
             </Router>
           </ToastProvider>
         </FavoritesProvider>
