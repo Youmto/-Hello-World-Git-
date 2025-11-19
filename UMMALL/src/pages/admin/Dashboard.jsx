@@ -2,12 +2,11 @@ import { Users, Handshake, CircleDollarSign, Box, RefreshCw, ChefHat } from 'luc
 import { useState } from 'react';
 import { monthlyData } from '../../data/admin/mockData';
 import { useNavigate } from 'react-router-dom';
-import { ClientChart, PartnerChart, SaleChart, ProductChart } from '../../components/admin/Chart';
+import { StatisticChart } from '../../components/admin/Chart';
 
 export default function Dashboard() {
   const navigate = useNavigate();
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [isGraphDetailsOpen, setIsGraphDetailsOpen] = useState(false);
 
   const handleNavigation = (e, path) => {
     e.preventDefault();
@@ -159,22 +158,7 @@ export default function Dashboard() {
         </div>
 
       </div>
-
-      <div
-        className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-6"
-      >
-        <ClientChart monthlyData={monthlyData} />
-        <PartnerChart monthlyData={monthlyData} />
-        <SaleChart monthlyData={monthlyData} />
-        <ProductChart monthlyData={monthlyData} />
-      </div>
-
-      {
-        isGraphDetailsOpen &&
-        <div>
-
-        </div>
-      }
+      <StatisticChart monthlyData={monthlyData} />
 
     </div>
   )
