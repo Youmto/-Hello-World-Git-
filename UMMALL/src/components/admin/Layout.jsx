@@ -6,7 +6,8 @@ import Sidebar from './Sidebar'
 // Layout Component
 export function MainLayout() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div 
+      className={`flex flex-col min-h-screen bg-background text-text-dark`}>
       <Header className="sm:hidden" />
 
       <div className='flex flex-1'>

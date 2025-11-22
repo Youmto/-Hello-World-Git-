@@ -1,10 +1,14 @@
 import { Users, RefreshCw, Trophy } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { UsersTable1 } from '../../components/admin/Table';
+import { useWidth } from '../../components/admin/Utility';
 
 export default function Client() {
   // const navigate = useNavigate();
   const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const width = useWidth();
 
   const handleRefresh = async () => {
     setIsRefreshing(true);
@@ -15,7 +19,7 @@ export default function Client() {
   return (
     <div className='p-2'>
       <span className='flex justify-between items-center'>
-        <h1 className="text-2xl font-bold mb-4">Manage Clients</h1>
+        <h1 className="text-2xl items-center font-bold mb-4">Manage Clients</h1>
         <button 
           onClick={handleRefresh}
           disabled={isRefreshing}
@@ -51,12 +55,14 @@ export default function Client() {
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md hover:border-gray-200 hover:bg-slate-100 transition-all duration-300 cursor-pointer group">
+        <div 
+          
+          className={`bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md hover:border-gray-200 hover:bg-slate-100 transition-all duration-300 cursor-pointer group`}>
           {/* Header with icon and label */}
           <div
-            className="flex items-center gap-3 mb-4"
+            className={`flex items-center gap-3 mb-4`}
           >
-            <div className="p-3 bg-blue-50 rounded-lg group-hover:bg-blue-100 transition-colors">
+            <div className={`p-3 bg-blue-50 rounded-lg group-hover:bg-blue-100 transition-colors`}>
               <Trophy className="size-6 text-blue-600" />
             </div>
             <h3 className="text-sm font-semibold text-gray-600 uppercase tracking-wide">
@@ -76,6 +82,18 @@ export default function Client() {
         </div>
       </div>
 
+      <div 
+        className='mt-8 bg-white p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md hover:border-gray-200 transition-all duration-200'
+      >
+        <h2
+          className='text-xl font-semibold mb-4'
+        > Client Details
+        </h2>
+        <UsersTable1 width={width} />
+      </div>
+      <div>
+        
+      </div>
     </div>
   )
 

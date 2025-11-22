@@ -36,10 +36,11 @@ export default function Dashboard() {
       </span>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
 
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md hover:border-gray-200 hover:bg-slate-100 transition-all duration-300 cursor-pointer group">
-          {/* Header with icon and label */}
-          <div 
+        <div 
             onClick={(e) => handleNavigation(e, '/admin/clients')}
+            className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md hover:border-gray-200 hover:bg-slate-100 transition-all duration-300 cursor-pointer group">
+          {/* Header with icon and label */}
+          <div
             className="flex items-center gap-3 mb-4"
           >
             <div className="p-3 bg-blue-50 rounded-lg group-hover:bg-blue-100 transition-colors">
